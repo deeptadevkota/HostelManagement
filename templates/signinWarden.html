@@ -1,0 +1,57 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+    </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+        
+        <section class="center-align">
+            Hostel Management Portal
+        </section>
+
+        <nav>
+            <div className="nav-wrapper">
+                <ul id="nav-mobile" className="left hide-on-med-and-down">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="signin.html">Sign In</a></li>
+                    <li><a href="Register1.html">Register</a></li>
+                    <li><a href="#">Staff</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+        </nav>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row" style="margin-left: 30%;">
+            <a class="waves-effect waves-light btn-large center darken-4" href="signin.html" style="background-color: #f9a825;">Student Login</a>
+            <a class="waves-effect waves-light btn-large center darken-4" href="signinWarden.html" style="background-color: #f9a825;">Warden Login</a>
+        </div>
+        <div class="container" style="width: 600px;" >
+            <div class="row">
+                <form class="col s12">
+                  <div class="row">
+                    <div class="input-field col s12">
+                        <input id="reg_no" type="text" class="validate" required>
+                        <label for="reg_no">Warden Number</label>
+                    </div>
+                    <br/>
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="password" type="password" required>
+                      <label for="password">Password</label>
+                    </div>
+                </div>
+                  </div>
+                </form>
+            </div>
+                <a class="waves-effect waves-light btn-large center darken-4" style="background-color: #f9a825;">SUBMIT</a>
+        </div>
+
+    </body>
+</html>

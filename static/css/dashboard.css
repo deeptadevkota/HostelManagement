@@ -1,0 +1,36 @@
+.center-align{
+    padding-top: 30px;
+    height:150px;
+    background-color:  black ;
+    font-weight: bolder;
+    font-size: 3em;
+    color: white;
+}
+
+nav, .waves-effect{
+    background-color: #f9a825;
+
+}
+section#content {
+    color: black;
+    position: absolute;
+    width: 100%;
+    top: 30%;
+    text-align: center;
+}
+h1{
+    font-weight: bolder;
+}
+img#slide {
+    width: 100%;
+    height: fit-content;
+}
+
+footer{
+    margin-top: -20px;
+    height: fit-content;
+    background-color: black;
+    color: white;
+    padding-top: 4px;
+    width: 100%;
+}
