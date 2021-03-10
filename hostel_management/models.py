@@ -14,17 +14,6 @@ class Students(models.Model):
     contact_number = models.CharField(max_length=20)
 
 
-class Blocks(models.Model):
-    block_name = models.CharField(max_length=50)
-    room_no = models.CharField(max_length=50)
-    roll_1 = models.ForeignKey(
-        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_1_student')
-    roll_2 = models.ForeignKey(
-        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_2_student')
-    roll_3 = models.ForeignKey(
-        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_3_student')
-
-
 class Warden(models.Model):
     warden_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -41,6 +30,20 @@ class Building(models.Model):
     rooms_per_floor = models.IntegerField()
     block_name = models.OneToOneField(Warden,
                                       on_delete=models.CASCADE, default=None)
+
+
+class Blocks(models.Model):
+    block_name = models.ForeignKey(
+        Building, on_delete=models.CASCADE, null=True, default=None, related_name='block_name_building')
+    room_no = models.CharField(max_length=50)
+    roll_1 = models.ForeignKey(
+        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_1_student')
+    roll_2 = models.ForeignKey(
+        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_2_student')
+    roll_3 = models.ForeignKey(
+        Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_3_student')
+    class Meta:
+        unique_together = (("block_name", "room_no"),)
 
 
 class Complaint(models.Model):
