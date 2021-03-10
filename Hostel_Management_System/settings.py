@@ -81,7 +81,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hostel_management_system',
         'USER':'root',
-        'PASSWORD':'akanksha.191CS106',
+        'PASSWORD':'password',
         'HOST':'localhost',
         'PORT':'3306'
     }
@@ -126,4 +126,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#STATICFILES_DIR = 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+
+
+
