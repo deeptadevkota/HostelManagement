@@ -25,12 +25,6 @@ class Blocks(models.Model):
         Students, on_delete=models.CASCADE, null=True, default=None, related_name='roll_3_student')
 
 
-class Building(models.Model):
-    type_block = models.CharField(primary_key=True, max_length=200)
-    num_of_floors = models.IntegerField()
-    rooms_per_floor = models.IntegerField()
-
-
 class Warden(models.Model):
     warden_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -39,7 +33,13 @@ class Warden(models.Model):
     email = models.EmailField(max_length=200)
     contact = models.CharField(max_length=20)
     gender = models.CharField(max_length=200)
-    block_name = models.OneToOneField(Building,
+
+
+class Building(models.Model):
+    type_block = models.CharField(primary_key=True, max_length=200)
+    num_of_floors = models.IntegerField()
+    rooms_per_floor = models.IntegerField()
+    block_name = models.OneToOneField(Warden,
                                       on_delete=models.CASCADE, default=None)
 
 
