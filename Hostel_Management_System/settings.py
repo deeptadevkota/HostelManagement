@@ -132,4 +132,4 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
-AUTH_USER_MODEL = 'hostel_management.CustomUser'
+# AUTH_USER_MODEL = 'hostel_management.CustomUser'
