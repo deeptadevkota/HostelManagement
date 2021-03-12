@@ -2,15 +2,8 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
-# Create your models here.
-# class CustomUser(AbstractUser):
-#     user_type_data = ((1, "Warden"), (2, "Student"))
-#     user_type = models.CharField(
-#         default=1, choices=user_type_data, max_length=20)
-
-
 class Student(models.Model):
-    roll_no = models.IntegerField(primary_key=True)
+    roll_no = models.CharField(primary_key=True, max_length=200)
     name = models.CharField(max_length=255)
     password = models.CharField(max_length=255)
     year = models.IntegerField()
