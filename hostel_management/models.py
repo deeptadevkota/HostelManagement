@@ -1,29 +1,31 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+class CustomUser(AbstractUser):
+    user_type_data = ((1, "Warden"), (2, "Student"))
+    user_type = models.CharField(
+        default=1, choices=user_type_data, max_length=10)
 
 
 class Student(models.Model):
     roll_no = models.CharField(primary_key=True, max_length=200)
-    name = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     year = models.IntegerField()
     branch = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
-    email = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=20)
 
 
 class Warden(models.Model):
-    warden_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
+    warden_id = models.AutoField(primary_key=True)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     department = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
     contact = models.CharField(max_length=20)
     gender = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.name
 
 
 class Building(models.Model):
@@ -56,5 +58,21 @@ class Complaint(models.Model):
     complaint = models.TextField()
     create_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
+
+@receiver(post_save,sender=CustomUser)
+def create_user_profile(sender,instance,created,**kwargs):
+    if created:
+        if instance.user_type==1:
+            Warden.objects.create(admin=instance)
+        if instance.user_type==2:
+            Student.objects.create(admin=instance)
+       
+@receiver(post_save,sender=CustomUser)
+def save_user_profile(sender,instance,**kwargs):
+    if instance.user_type==1:
+        instance.warden.save()
+    if instance.user_type==2:
+        instance.student.save()
+
 
 
