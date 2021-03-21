@@ -11,7 +11,7 @@ class CustomUser(AbstractUser):
 
 
 class Student(models.Model):
-    roll_no = models.CharField(primary_key=True, max_length=200)
+    roll_no = models.CharField(max_length=200)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     year = models.IntegerField(default=2019)
     branch = models.CharField(max_length=50)
