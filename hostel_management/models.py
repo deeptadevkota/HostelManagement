@@ -11,13 +11,9 @@ class CustomUser(AbstractUser):
 
 
 class Student(models.Model):
-    first_name=models.CharField(max_length=200)
-    last_name=models.CharField(max_length=200)
     roll_no = models.CharField(primary_key=True, max_length=200)
-    email=models.CharField(max_length=200)
-    password=models.CharField(max_length=200)
-    #admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-    year = models.IntegerField()
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    year = models.IntegerField(default=2019)
     branch = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
     contact_number = models.CharField(max_length=20)
@@ -68,15 +64,15 @@ def create_user_profile(sender,instance,created,**kwargs):
     if created:
         if instance.user_type==1:
             Warden.objects.create(admin=instance)
-        # if instance.user_type==2:
-        #     Student.objects.create(admin=instance)
+        if instance.user_type==2:
+            Student.objects.create(admin=instance)
        
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
     if instance.user_type==1:
         instance.warden.save()
-    # if instance.user_type==2:
-    #     instance.student.save()
+    if instance.user_type==2:
+        instance.student.save()
 
 
 

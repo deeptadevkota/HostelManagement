@@ -41,14 +41,13 @@ def register_form_submission(request):
             email = request.POST.get('email')
             contact_number = request.POST.get('contact')
             password = request.POST.get('password')
-
-            
             user = CustomUser.objects.create_user(
-                username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
+                username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
+            user.student.roll_no=roll_no
+            user.student.branch=branch
+            user.student.year=year
+            user.student.contact_number=contact_number
             user.save()
-            student = Student(first_name=first_name, last_name=last_name, roll_no=roll_no, branch=branch,
-                                year=year, email=email, contact_number=contact_number, password=password)
-            student.save()
             return render(request, 'signin.html', {})
 
 
