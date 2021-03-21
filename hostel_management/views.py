@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student
+from .models import Student, Warden, CustomUser
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login
 # Create your views here.
@@ -28,18 +28,28 @@ def dashboard(request):
 
 
 def register_form_submission(request):
-    if request.method == 'POST':
-        roll_no = request.POST.get('roll_no')
-        name = request.POST.get('name')
-        branch = request.POST.get('branch')
-        year = request.POST.get('year')
-        email = request.POST.get('email')
-        contact_number = request.POST.get('contact')
-        password = request.POST.get('password')
-        student = Student(name=name, roll_no=roll_no, branch=branch,
-                          year=year, email=email, contact_number=contact_number, password=password)
-        student.save()
-    return render(request, 'signin.html', {})
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        if request.method == 'POST':
+            roll_no = request.POST.get('roll_no')
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            username = request.POST.get("username")
+            branch = request.POST.get('branch')
+            year = request.POST.get('year')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact')
+            password = request.POST.get('password')
+
+            
+            user = CustomUser.objects.create_user(
+                username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
+            user.save()
+            student = Student(first_name=first_name, last_name=last_name, roll_no=roll_no, branch=branch,
+                                year=year, email=email, contact_number=contact_number, password=password)
+            student.save()
+            return render(request, 'signin.html', {})
 
 
 def dosigninWarden(request):
