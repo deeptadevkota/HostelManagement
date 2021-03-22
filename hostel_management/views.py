@@ -42,7 +42,7 @@ def register_form_submission(request):
             contact_number = request.POST.get('contact')
             password = request.POST.get('password')
             user = CustomUser.objects.create_user(
-                username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
+            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
             user.student.roll_no=roll_no
             user.student.branch=branch
             user.student.year=year
@@ -55,15 +55,26 @@ def dosigninWarden(request):
     if request.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        user = EmailBackEnd.authenticate(request, username=request.POST.get(
-            "email"), password=request.POST.get("password"))
+        user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
             login(request, user)
             if user.user_type == "1":
                 return render(request, 'home.html', {})
-            elif user.user_type == "2":
-                return render(request, 'home.html', {})
             else:
-                return render(request, 'home.html', {})
+                return render(request, 'signin.html', {})
+        else:
+            return render(request, 'signin.html', {})
+
+def dosigninStudent(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
+        if user != None:
+            login(request, user)
+            if user.user_type == "2":
+                return render(request, 'studentDashboard.html', {})
+            else:
+                return render(request, 'signin.html', {})
         else:
             return render(request, 'signin.html', {})

@@ -34,23 +34,25 @@
         </div>
         <div class="container" style="width: 600px;" >
             <div class="row">
-                <form class="col s12">
+                <form class="col s12" method='POST' action="dosigninStudent">
+                    {%csrf_token%}
                   <div class="row">
                     <div class="input-field col s12">
-                        <input id="reg_no" type="text" class="validate" required>
-                        <label for="reg_no">Registration Number</label>
+                        <input id="email" type="email" name="email" class="validate" required>
+                        <label for="email">Email</label>
                     </div>
                     <br/>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input id="password" type="password" required>
-                      <label for="password">Password</label>
+                        <input id="password" type="text" required name="password">
+                        <label for="password">Password</label>
                     </div>
                 </div>
+                <input type="submit" value="SUBMIT" class="waves-effect waves-light btn-large center darken-4"
+                        style="background-color: #f9a825;">
                   </div>
                 </form>
             </div>
-                <a class="waves-effect waves-light btn-large center darken-4" href="dashboard" style="background-color: #f9a825;">SUBMIT</a>
         </div>
 
     </body>
