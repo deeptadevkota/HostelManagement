@@ -133,4 +133,4 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 AUTH_USER_MODEL = 'hostel_management.CustomUser'
-AUTHENTICATION_BACKENDS=['hostel_management.EmailBackEnd.EmailBackEnd']
+AUTHENTICATION_BACKENDS=('hostel_management.EmailBackEnd.EmailBackEnd', 'django.contrib.auth.backends.ModelBackend')
