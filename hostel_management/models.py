@@ -5,7 +5,7 @@ from django.dispatch import receiver
 
 
 class CustomUser(AbstractUser):
-    user_type_data = ((1, "Warden"), (2, "Student"))
+    user_type_data = ((2, "Warden"), (3, "Student"))
     user_type = models.CharField(
         default=1, choices=user_type_data, max_length=10)
 
@@ -62,16 +62,16 @@ class Complaint(models.Model):
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
-        if instance.user_type==1:
-            Warden.objects.create(admin=instance)
         if instance.user_type==2:
+            Warden.objects.create(admin=instance)
+        if instance.user_type==3:
             Student.objects.create(admin=instance)
        
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
-    if instance.user_type==1:
-        instance.warden.save()
     if instance.user_type==2:
+        instance.warden.save()
+    if instance.user_type==3:
         instance.student.save()
 
 

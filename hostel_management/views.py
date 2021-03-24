@@ -14,6 +14,8 @@ def home(request):
 def register(request):
     return render(request, 'Register1.html', {})
 
+def registerWarden(request):
+    return render(request, 'RegisterWarden.html', {})
 
 def signin(request):
     return render(request, 'signin.html', {})
@@ -42,7 +44,7 @@ def register_form_submission(request):
             contact_number = request.POST.get('contact')
             password = request.POST.get('password')
             user = CustomUser.objects.create_user(
-            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
+            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)        
             user.student.roll_no=roll_no
             user.student.branch=branch
             user.student.year=year
@@ -50,6 +52,26 @@ def register_form_submission(request):
             user.save()
             return render(request, 'signin.html', {})
 
+def registerWarden_form_submission(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        if request.method == 'POST':
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            username = request.POST.get("username")
+            department = request.POST.get('branch')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact')
+            password = request.POST.get('password')
+            gender = request.POST.get('gender')
+            user = CustomUser.objects.create_user(
+            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
+            user.warden.gender=gender
+            user.warden.department=department
+            user.warden.contact=contact_number
+            user.save()
+            return render(request, 'signin.html', {})
 
 def dosigninWarden(request):
     if request.method != "POST":
@@ -58,7 +80,7 @@ def dosigninWarden(request):
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
             login(request, user)
-            if user.user_type == "1":
+            if user.user_type == "2":
                 return render(request, 'home.html', {})
             else:
                 return render(request, 'signin.html', {})
@@ -71,10 +93,15 @@ def dosigninStudent(request):
     else:
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
-            login(request, user)
-            if user.user_type == "2":
+            login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
+            if user.user_type == "3":
                 return render(request, 'studentDashboard.html', {})
             else:
                 return render(request, 'signin.html', {})
         else:
             return render(request, 'signin.html', {})
+
+def contactUs(request):
+    objs=CustomUser.objects.filter(user_type="2")
+    objs1=Warden.objects.all()
+    return render(request,'contactUs.html',{'objs':objs, 'objs1': objs1})
