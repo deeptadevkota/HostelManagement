@@ -41,59 +41,23 @@ def register_form_submission(request):
             email = request.POST.get('email')
             contact_number = request.POST.get('contact')
             password = request.POST.get('password')
+            gender = request.POST.get('gender')
             user = CustomUser.objects.create_user(
-            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)        
+            username=username, password=password, email=email, last_name=last_name, first_name=first_name, gender = gender,user_type=3)        
             user.student.roll_no=roll_no
             user.student.branch=branch
             user.student.year=year
             user.student.contact_number=contact_number
+
+            #if user.objects.filter(roll_no = roll_no).exists:
+
+
             user.save()
 
-            if gender == "Female":
-                latest_room = GH1.objects.order_by('room_no').last()
-                print(latest_room)
 
-                if latest_room == None:
-                    new_room = GH1(room_no = 101, roll_1 = roll_no)
-                    new_room.save()
-                elif latest_room.roll_2 == None:
-                    latest_room.roll_2 = roll_no
-                    latest_room.save()
-                elif latest_room.roll_3 == None:
-                    latest_room.roll_3 = roll_no
-                    latest_room.save()
-                else:
-                    latest_count = GH1.objects.count()
-                    mod = latest_count % 25
-                    quotient = int(latest_count / 25)
-                    print()
-                    room_no = 100*(quotient+1) + mod +1
-                    room = GH1(room_no = room_no, roll_1 = roll_no)
-                    room.save()
-            else:
-                latest_room = BH1.objects.order_by('room_no').last()
 
-                print(latest_room)
-
-                if latest_room == None:
-                    new_room = BH1(room_no = 101, roll_1 = roll_no)
-                    new_room.save()
-                elif latest_room.roll_2 == None:
-                    latest_room.roll_2 = roll_no
-                    latest_room.save()
-                elif latest_room.roll_3 == None:
-                    latest_room.roll_3 = roll_no
-                    latest_room.save()
-                else:
-                    latest_count = BH1.objects.count()
-                    mod = latest_count % 25
-                    quotient = int(latest_count / 25)
-                    print()
-                    room_no = 100*(quotient+1) + mod +1
-                    room = BH1(room_no = room_no, roll_1 = roll_no)
-                    room.save()
-            print("Student created")
             return render(request, 'signin.html', {})
+            
 
 def dosigninWarden(request):
     if request.method != "POST":
@@ -115,7 +79,7 @@ def dosigninStudent(request):
     else:
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
-            login(request, user)
+            login(request, user,backend='hostel_management.EmailBackEnd.EmailBackEnd')
             if user.user_type == "3":
                 return render(request, 'studentDashboard.html', {})
             else:
@@ -126,6 +90,51 @@ def dosigninStudent(request):
 
 def room_register(request):
     return render(request, '3Y4Y_room_register.html')
+
+def room_register_1(request):
+    if gender == "Female":
+        latest_room = GH1.objects.order_by('room_no').last()
+        print(latest_room)
+        if latest_room == None:
+            new_room = GH1(room_no = 101, roll_1 = roll_no)
+            new_room.save()
+        elif latest_room.roll_2 == None:
+            latest_room.roll_2 = roll_no
+            latest_room.save()
+        elif latest_room.roll_3 == None:
+            latest_room.roll_3 = roll_no
+            latest_room.save()
+        else:
+            latest_count = GH1.objects.count()
+            mod = latest_count % 25
+            quotient = int(latest_count / 25)
+            print()
+            room_no = 100*(quotient+1) + mod +1
+            room = GH1(room_no = room_no, roll_1 = roll_no)
+            room.save()
+    else:
+        latest_room = BH1.objects.order_by('room_no').last()
+        print(latest_room)
+        if latest_room == None:
+            new_room = BH1(room_no = 101, roll_1 = roll_no)
+            new_room.save()
+        elif latest_room.roll_2 == None:
+            latest_room.roll_2 = roll_no
+            latest_room.save()
+        elif latest_room.roll_3 == None:
+            latest_room.roll_3 = roll_no
+            latest_room.save()
+        else:
+            latest_count = BH1.objects.count()
+            mod = latest_count % 25
+            quotient = int(latest_count / 25)
+            print()
+            room_no = 100*(quotient+1) + mod +1
+            room = BH1(room_no = room_no, roll_1 = roll_no)
+            room.save()
+    print("Student created")
+
+    return render(request, 'studentDashboard.html', {})
 
 
 def room_register_3_4(request):
@@ -152,7 +161,6 @@ def room_register_3_4(request):
             elif int(year) == 4 and BH4.objects.filter(roll_1 = roll_no).exists():
                 print("Room already allocated")
                 return render(request, 'studentDashboard.html', {})
-
 
         if gender == "Female":
             if int(year) == 3:
