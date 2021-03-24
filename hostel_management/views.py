@@ -79,7 +79,7 @@ def dosigninWarden(request):
     else:
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
-            login(request, user)
+            login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
             if user.user_type == "2":
                 return render(request, 'home.html', {})
             else:
