@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('home', views.home, name="home"),
     path('register', views.register, name="register"),
+    path('registerWarden', views.registerWarden, name="registerWarden"),
     path('signin', views.signin, name="signin"),
     path('warden', views.signinwarden, name="signinwarden"),
     path('dosigninWarden', views.dosigninWarden, name = "dosigninWarden"),
@@ -17,4 +18,7 @@ urlpatterns = [
     path('room_register_1_3_4', views.room_register_1_3_4, name = "room_register_1_3_4"),
     path('waiting_table_form',views.waiting_table_form, name = "waiting_table_form"),
     path('waiting_table',views.waiting_table, name = "waiting_table")
+    path('registerWarden_form_submission', views.registerWarden_form_submission,
+         name="registerWarden_form_submission"),
+    path('contactUs', views.contactUs, name="contactUs")
 ]

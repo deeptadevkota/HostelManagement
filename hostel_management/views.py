@@ -14,6 +14,8 @@ def home(request):
 def register(request):
     return render(request, 'Register1.html', {})
 
+def registerWarden(request):
+    return render(request, 'RegisterWarden.html', {})
 
 def signin(request):
     return render(request, 'signin.html', {})
@@ -71,8 +73,28 @@ def register_form_submission(request):
             user.student.contact_number=contact_number
 
             user.save()
+            return render(request, 'signin.html', {})  
+
+def registerWarden_form_submission(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        if request.method == 'POST':
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            username = request.POST.get("username")
+            department = request.POST.get('branch')
+            email = request.POST.get('email')
+            contact_number = request.POST.get('contact')
+            password = request.POST.get('password')
+            gender = request.POST.get('gender')
+            user = CustomUser.objects.create_user(
+            username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)        
+            user.warden.gender=gender
+            user.warden.department=department
+            user.warden.contact=contact_number
+            user.save()
             return render(request, 'signin.html', {})
-            
 
 def dosigninWarden(request):
     if request.method != "POST":
@@ -80,7 +102,7 @@ def dosigninWarden(request):
     else:
         user = EmailBackEnd.authenticate(request, username=request.POST.get("email"), password=request.POST.get("password"))
         if user != None:
-            login(request, user)
+            login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
             if user.user_type == "2":
                 return render(request, 'home.html', {})
             else:
@@ -103,7 +125,6 @@ def dosigninStudent(request):
                 return render(request, 'signin.html', {})
         else:
             return render(request, 'signin.html', {})       
-
 
 def room_register_1_3_4(request):
     if request.method != "POST":
@@ -303,3 +324,8 @@ def waiting_table(request):
         room.save()
 
     return render(request, 'home.html', {})
+
+def contactUs(request):
+    objs=CustomUser.objects.filter(user_type="2")
+    objs1=Warden.objects.all()
+    return render(request,'contactUs.html',{'objs':objs, 'objs1': objs1})

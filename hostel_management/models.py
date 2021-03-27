@@ -8,9 +8,6 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(
         default=1, choices=user_type_data, max_length=20)
 
-# class HostelAdmin(models.Model):
-#     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-
 class Student(models.Model):
     roll_no = models.CharField(max_length=200)
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -85,8 +82,6 @@ class WaitingTable(models.Model):
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:
-        # if instance.user_type==1:
-        #     HostelAdmin.objects.create(admin=instance)
         if instance.user_type==2:
             Warden.objects.create(admin=instance)
         if instance.user_type==3:
@@ -94,8 +89,6 @@ def create_user_profile(sender,instance,created,**kwargs):
        
 @receiver(post_save,sender=CustomUser)
 def save_user_profile(sender,instance,**kwargs):
-    # if instance.user_type==1:
-    #     instance.hosteladmin.save()
     if instance.user_type==2:
         instance.warden.save()
     if instance.user_type==3:
