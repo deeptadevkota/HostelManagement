@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable, Complaint
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from hostel_management.EmailBackEnd import EmailBackEnd
 
 
@@ -45,6 +45,11 @@ def complainForm(request):
     return render(request, 'complainForm.html')
 
 
+def dosignout(request):
+    logout(request)
+    return render(request, 'home.html')
+
+
 def complainFormSubmission(request):
     if request.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
@@ -52,7 +57,7 @@ def complainFormSubmission(request):
         roll_no = request.POST.get('roll_no')
         complainText = request.POST.get('complainText')
         student = Student.objects.filter(roll_no=roll_no)[0]
-        complain = Complaint(roll_no=student,complaintText=complainText)
+        complain = Complaint(roll_no=student, complaintText=complainText)
         complain.save()
         return render(request, 'studentDashboard.html', {})
 
