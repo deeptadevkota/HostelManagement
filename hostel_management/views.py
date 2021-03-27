@@ -392,3 +392,9 @@ def contactUs(request):
     objs = CustomUser.objects.filter(user_type="2")
     objs1 = Warden.objects.all()
     return render(request, 'contactUs.html', {'objs': objs, 'objs1': objs1})
+
+
+
+def viewComplain(request):
+    complain = Complaint.objects.all()
+    return render(request, 'viewComplain.html', {'complain': complain})

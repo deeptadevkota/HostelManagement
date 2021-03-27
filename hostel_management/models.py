@@ -25,6 +25,9 @@ class Building(models.Model):
     num_of_floors = models.IntegerField()
     rooms_per_floor = models.IntegerField()
 
+    def __str__(self):
+        return self.block_name
+
 class Warden(models.Model):
     admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
     department = models.CharField(max_length=200)
