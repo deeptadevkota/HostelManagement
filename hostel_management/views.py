@@ -116,11 +116,14 @@ def registerWarden_form_submission(request):
             contact_number = request.POST.get('contact')
             password = request.POST.get('password')
             gender = request.POST.get('gender')
+            block_name = request.POST.get('block')
             user = CustomUser.objects.create_user(
                 username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
             user.warden.gender = gender
             user.warden.department = department
             user.warden.contact = contact_number
+            block=Building.objects.get(block_name=block_name)
+            user.warden.block_name=block
             user.save()
             return render(request, 'signin.html', {})
 
