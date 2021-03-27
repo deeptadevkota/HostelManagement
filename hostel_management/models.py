@@ -30,7 +30,7 @@ class Warden(models.Model):
     department = models.CharField(max_length=200)
     contact = models.CharField(max_length=20)
     gender = models.CharField(max_length=200)
-    block_name = models.ForeignKey(Building,on_delete=models.CASCADE,, default=None, null=True)
+    block_name = models.ForeignKey(Building,on_delete=models.CASCADE, default=None, null=True)
 
 class GH1(models.Model):
     room_no = models.IntegerField(primary_key = True)

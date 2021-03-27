@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable, Complaint
+from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable, Complaint, Building
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout
 from hostel_management.EmailBackEnd import EmailBackEnd
@@ -27,6 +27,9 @@ def signinwarden(request):
 
 def dashboard(request):
     return render(request, 'studentDashboard.html', {})
+
+def wardenDashboard(request):
+    return render(request, 'wardenDashboard.html', {})
 
 
 def room_register134(request):
@@ -136,8 +139,9 @@ def dosigninWarden(request):
             "email"), password=request.POST.get("password"))
         if user != None:
             login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
+            warden = CustomUser.objects.get(id=request.user.id)
             if user.user_type == "2":
-                return render(request, 'home.html', {})
+                return render(request, 'wardenDashboard.html', {'warden':warden})
             else:
                 return render(request, 'signin.html', {})
         else:

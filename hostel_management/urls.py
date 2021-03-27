@@ -23,5 +23,7 @@ urlpatterns = [
     path('contactUs', views.contactUs, name="contactUs"),
     path('complainForm', views.complainForm, name="complain"),
     path('complainFormSubmission', views.complainFormSubmission, name="complainFormSubmission"),
-    path('signout', views.dosignout, name="dosignout")
+    path('signout', views.dosignout, name="dosignout"),
+    path('wardenDashboard', views.wardenDashboard, name="wardenDashboard")
+
 ]
