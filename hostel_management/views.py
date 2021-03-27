@@ -155,8 +155,9 @@ def dosigninWarden(request):
         if user != None:
             login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
             warden = CustomUser.objects.get(id=request.user.id)
+            block=Warden.objects.get(admin_id=warden.id).block_name
             if user.user_type == "2":
-                return render(request, 'wardenDashboard.html', {'warden':warden})
+                return render(request, 'wardenDashboard.html', context={'warden':warden, 'block':block})
             else:
                 messages.info(request,"Invalid Email or Password")
                 return render(request, 'signin.html', {})
