@@ -38,19 +38,19 @@
         <br/>
         <div class="container" style="width: 600px;" >
             <div class="row">
-                <form class="col s12" method='POST' action="fileComplain">
+                <form class="col s12" method='POST' action="complainFormSubmission">
                     {%csrf_token%}
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="rollno" type="text" required name="rollno">
+                            <input id="rollno" type="text" required name="roll_no">
                             <label for="rollno">Roll No</label>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="complain" type="text" name="complain" required>
-                            <label for="complain">Complain</label>
+                            <input id="complainText" type="text" name="complainText" required>
+                            <label for="complainText">Complain</label>
                         </div>
                     <br/>
                 <input type="submit" value="SUBMIT" class="waves-effect waves-light btn-large center darken-4"

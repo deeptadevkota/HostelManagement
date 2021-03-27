@@ -16,6 +16,10 @@ class Student(models.Model):
     gender = models.CharField(max_length=50)
     contact_number = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.roll_no
+
+
 class Building(models.Model):
     block_name = models.CharField(primary_key = True, max_length = 50 ,default=None)
     num_of_floors = models.IntegerField()
@@ -68,10 +72,10 @@ class BH4(models.Model):
     roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class Complaint(models.Model):
-    complaint_id = models.IntegerField(primary_key=True)
-    Students = models.ForeignKey(
+    complaint_id = models.AutoField(primary_key=True)
+    roll_no = models.ForeignKey(
         Student, on_delete=models.CASCADE, null=True, default=None)
-    complaint = models.TextField()
+    complaintText = models.TextField()
     create_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
 

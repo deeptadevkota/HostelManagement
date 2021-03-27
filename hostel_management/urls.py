@@ -17,8 +17,10 @@ urlpatterns = [
     path('room_register134', views.room_register134, name = "room_register134"),
     path('room_register_1_3_4', views.room_register_1_3_4, name = "room_register_1_3_4"),
     path('waiting_table_form',views.waiting_table_form, name = "waiting_table_form"),
-    path('waiting_table',views.waiting_table, name = "waiting_table")
+    path('waiting_table',views.waiting_table, name = "waiting_table"),
     path('registerWarden_form_submission', views.registerWarden_form_submission,
          name="registerWarden_form_submission"),
-    path('contactUs', views.contactUs, name="contactUs")
+    path('contactUs', views.contactUs, name="contactUs"),
+    path('complainForm', views.complainForm, name="complain"),
+    path('complainFormSubmission', views.complainFormSubmission, name="complainFormSubmission")
 ]

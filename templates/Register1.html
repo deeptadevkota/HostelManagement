@@ -26,10 +26,12 @@
       </ul>
     </div>
   </nav>
-  <br/>
+  <br />
   <div class="row" style="margin-left: 30%;">
-      <a class="waves-effect waves-light btn-large center darken-4" href="register" style="background-color: #f9a825;">Student Registration</a>
-      <a class="waves-effect waves-light btn-large center darken-4" href="registerWarden" style="background-color: #f9a825;">Warden Registration</a>
+    <a class="waves-effect waves-light btn-large center darken-4" href="register"
+      style="background-color: #f9a825;">Student Registration</a>
+    <a class="waves-effect waves-light btn-large center darken-4" href="registerWarden"
+      style="background-color: #f9a825;">Warden Registration</a>
   </div>
   <div class="container">
     <div class="row">
@@ -47,13 +49,8 @@
             </div>
             <div class="input-field col s12">
               <input id="username" type="text" name="username" class="validate" required>
-              <label for="username">Username</label>
+              <label for="username">Roll number</label>
             </div>
-          </div>
-
-          <div class="input-field col s6">
-            <input id="reg_no" type="text" name="roll_no" class="validate" required>
-            <label for="reg_no">Roll Number</label>
           </div>
           <div class="input-field col s6">
             <input id="branch" type="text" name="branch" class="validate" required>
@@ -74,18 +71,16 @@
             <label for="gender">Gender</label>
           </div>
         </div>
-
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" name="password" type="text" class="validate" required>
+            <label for="password">Password</label>
+          </div>
+        </div>
         <div class="row">
           <div class="input-field col s12">
             <input id="email" type="email" name="email" class="validate" required>
             <label for="email">Email</label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="input-field col s12">
-            <input id="password" name="password" type="text" required>
-            <label for="password">Password</label>
           </div>
         </div>
         <input type="submit" value="SUBMIT" class="waves-effect waves-light btn-large center darken-4"
@@ -93,7 +88,5 @@
       </form>
     </div>
   </div>
-
 </body>
-
 </html>
