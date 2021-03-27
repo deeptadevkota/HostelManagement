@@ -397,4 +397,4 @@ def contactUs(request):
 
 def viewComplain(request):
     complain = Complaint.objects.all()
-    return render(request, 'viewComplain.html', {'complain': complain})
+    return render(request, 'viewComplain.html', {'complain': complain, 'user':CustomUser})
