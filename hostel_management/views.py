@@ -56,7 +56,7 @@ def complainFormSubmission(request):
     else:
         roll_no = request.POST.get('roll_no')
         complainText = request.POST.get('complainText')
-        student = Student.objects.filter(roll_no=roll_no)[0]
+        student = Student.objects.get(roll_no=roll_no)
         complain = Complaint(roll_no=student, complaintText=complainText)
         complain.save()
         return render(request, 'studentDashboard.html', {})
@@ -152,7 +152,7 @@ def dosigninStudent(request):
             admin_id = user.id
             student = Student.objects.get(admin_id=admin_id)
             if user.user_type == "3":
-                return render(request, 'studentDashboard.html', {"student": student})
+                return render(request, 'studentDashboard.html', {"student": student, "user":user})
             else:
                 return render(request, 'signin.html', {})
         else:

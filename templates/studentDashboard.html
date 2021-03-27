@@ -27,7 +27,7 @@
         </nav>
         <section id="main">
             <section id="content">
-                <h1>Welcome!</h1>
+                <h1>Welcome! {{user.first_name}} {{user.last_name}}</h1>
                 <br/>
                 <br/>
                 {% if user.is_authenticated %}
