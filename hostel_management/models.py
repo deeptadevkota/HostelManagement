@@ -78,6 +78,10 @@ class Complaint(models.Model):
     create_date = models.DateField(auto_now_add=True)
     update_date = models.DateField(auto_now=True)
 
+class WaitingTable(models.Model):
+    roll_no = models.CharField(primary_key = True, max_length = 10)
+    gender = models.CharField(max_length=50)
+
 @receiver(post_save,sender=CustomUser)
 def create_user_profile(sender,instance,created,**kwargs):
     if created:

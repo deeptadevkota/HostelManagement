@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Warden, Building, Complaint, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4
+from .models import Student, Warden, Building, Complaint, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable
 # Register your models here.
 
 
@@ -26,3 +26,4 @@ admin.site.register(BH2)
 admin.site.register(BH3)
 admin.site.register(BH4)
 admin.site.register(Complaint)
+admin.site.register(WaitingTable)
