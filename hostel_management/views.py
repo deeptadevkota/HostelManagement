@@ -3,6 +3,7 @@ from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, B
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout
 from hostel_management.EmailBackEnd import EmailBackEnd
+from django.contrib import messages
 
 
 def home(request):
@@ -84,15 +85,18 @@ def register_form_submission(request):
 
             if CustomUser.objects.filter(email=email).exists():
                 print('user already exists')
-                return render(request, 'signin.html', {})
+                messages.info(request,"Email already exists")
+                return render(request, 'Register1.html', {})
 
             if CustomUser.objects.filter(username=username).exists():
                 print('username already taken')
-                return render(request, 'signin.html', {})
+                messages.info(request,"Username already exists")
+                return render(request, 'Register1.html', {})
 
             if Student.objects.filter(roll_no=roll_no).exists():
                 print('Student already registered')
-                return render(request, 'signin.html', {})
+                messages.info(request,"Roll no. already registered")
+                return render(request, 'Register.html', {})
 
             user = CustomUser.objects.create_user(
                 username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=3)
@@ -120,6 +124,17 @@ def registerWarden_form_submission(request):
             password = request.POST.get('password')
             gender = request.POST.get('gender')
             block_name = request.POST.get('block')
+
+            if CustomUser.objects.filter(email=email).exists():
+                print('user already exists')
+                messages.info(request,"Email already exists")
+                return render(request, 'RegisterWarden.html', {})
+
+            if CustomUser.objects.filter(username=username).exists():
+                print('username already taken')
+                messages.info(request,"Username already exists")
+                return render(request, 'RegisterWarden.html', {})
+
             user = CustomUser.objects.create_user(
                 username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
             user.warden.gender = gender
@@ -143,8 +158,10 @@ def dosigninWarden(request):
             if user.user_type == "2":
                 return render(request, 'wardenDashboard.html', {'warden':warden})
             else:
+                messages.info(request,"Invalid Email or Password")
                 return render(request, 'signin.html', {})
         else:
+            messages.info(request,"Invalid Email or Password")
             return render(request, 'signin.html', {})
 
 
@@ -161,8 +178,10 @@ def dosigninStudent(request):
             if user.user_type == "3":
                 return render(request, 'studentDashboard.html', {"student": student, "user":user})
             else:
+                messages.info(request,"Invalid Email or Password")
                 return render(request, 'signin.html', {})
         else:
+            messages.info(request,"Invalid Email or Password")
             return render(request, 'signin.html', {})
 
 
@@ -278,7 +297,7 @@ def room_register_1_3_4(request):
                 room.save()
 
         print('room saved')
-        return render(request, 'signin.html', {})
+        return render(request, 'studentDashboard.html', {})
 
 
 def room_register_2(request):
@@ -322,7 +341,7 @@ def room_register_2(request):
             room.save()
 
         print('room saved')
-        return render(request, 'signin.html', {})
+        return render(request, 'studentDashboard.html', {})
 
 
 def waiting_table(request):
@@ -332,15 +351,15 @@ def waiting_table(request):
     if gender == "Female":
         if GH2.objects.filter(roll_1=roll_1).exists() or GH2.objects.filter(roll_2=roll_1).exists():
             print("Roll no 1 already allocated room")
-            return render(request, 'home.html', {})
+            return render(request, 'studentDashboard.html', {})
     else:
         if BH2.objects.filter(roll_1=roll_1).exists() or BH2.objects.filter(roll_2=roll_1).exists():
             print("Roll no 1 already allocated room")
-            return render(request, 'home.html', {})
+            return render(request, 'studentDashboard.html', {})
 
     if WaitingTable.objects.filter(roll_no=roll_1).exists():
         print('Roll no already in waiting table')
-        return render(request, 'home.html')
+        return render(request, 'studentDashboard.html', {})
 
     count = WaitingTable.objects.filter(gender=gender).count()
     if count == 0:
@@ -365,7 +384,7 @@ def waiting_table(request):
         room = BH2(room_no=room_no, roll_1=roll_1, roll_2=roll_2)
         room.save()
 
-    return render(request, 'home.html', {})
+    return render(request, 'studentDashboard.html', {})
 
 
 def contactUs(request):

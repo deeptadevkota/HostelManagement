@@ -55,6 +55,13 @@
                         style="background-color: #f9a825;">
                 </div>
             </form>
+            <div class="col s12">
+                <h4>
+                    {%for message in messages%}
+                        {{message}}
+                    {%endfor%}
+                </h4>
+            </div>
         </div>
 
     </div>
