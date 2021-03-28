@@ -28,5 +28,6 @@ urlpatterns = [
     path('signout', views.dosignout, name="dosignout"),
     path('wardenDashboard', views.wardenDashboard, name="wardenDashboard"),
     path('viewComplain', views.viewComplain, name="viewComplain"),
-     path('studentList', views.studentList, name="studentList")
+     path('studentList', views.studentList, name="studentList"),
+     path('knowYourWarden',views.knowYourWarden, name="knowYourWarden")
 ]

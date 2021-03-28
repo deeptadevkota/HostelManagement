@@ -427,3 +427,52 @@ def studentList(request):
     elif block.block_name=="BH4":
         student_list=Student.objects.filter(year=4,gender='Male')
         return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+
+def knowYourWarden(request):
+    user=CustomUser.objects.get(id=request.user.id)
+    student=Student.objects.get(admin_id=user.id)
+    year=student.year
+    gender=student.gender
+    if gender=='Male':
+        if year==1:
+            block='BH1'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==2:
+            block='BH2'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==3:
+            block='BH3'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==4:
+            block='BH4'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+    elif gender=='Female':
+        if year==1:
+            block='GH1'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==2:
+            block='GH2'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==3:
+            block='GH3'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        elif year==4:
+            block='GH4'
+            warden=Warden.objects.get(block_name=block)
+            customUser=CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser})
+        
