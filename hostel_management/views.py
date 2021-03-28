@@ -143,8 +143,10 @@ def registerWarden_form_submission(request):
             user.warden.department = department
             user.warden.contact = contact_number
             block=Building.objects.get(block_name=block_name)
+            print(block)
             user.warden.block_name=block
             user.save()
+            print('saved')
             return render(request, 'signin.html', {})
 
 

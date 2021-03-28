@@ -72,21 +72,14 @@
                 </div>
                 <div class="row">
                     <div class="input-field col s6">
-                        <select>
-                          <option value = "" disabled selected>Gender</option>
-                          <option value = "gender" type="text">Female</option>
-                          <option value = "gender" type="text">Male</option>
-                        </select> 
+                        <input id="gender" type="text" name="gender" class="validate" required>
+                        <label for="gender">Gender</label>
                     </div>
                     <div class="input-field col s6">
-                        <select>
-                            <option value = "" disabled selected>Block Name</option>
-                            {%for b in blocks%}
-                              <option value = "block" type="text">{{b.block_name}}</option>
-                            {%endfor%}
-                        </select> 
+                      <input id="block" type="text" name="block" class="validate" required>
+                      <label for="block">Block</label>
                     </div>
-                  </div>
+                </div>
         
                 <div class="row">
                   <div class="input-field col s12">
