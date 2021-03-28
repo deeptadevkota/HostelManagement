@@ -15,7 +15,9 @@ def register(request):
 
 
 def registerWarden(request):
-    return render(request, 'RegisterWarden.html', {})
+    blocks = Building.objects.all()
+    print(blocks)
+    return render(request, 'RegisterWarden.html', {"blocks":blocks})
 
 
 def signin(request):
