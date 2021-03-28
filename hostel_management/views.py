@@ -391,14 +391,39 @@ def waiting_table(request):
 
     return render(request, 'studentDashboard.html', {})
 
-
 def contactUs(request):
     objs = CustomUser.objects.filter(user_type="2")
     objs1 = Warden.objects.all()
     return render(request, 'contactUs.html', {'objs': objs, 'objs1': objs1})
 
-
-
 def viewComplain(request):
     complain = Complaint.objects.all()
     return render(request, 'viewComplain.html', {'complain': complain, 'user':CustomUser})
+
+def studentList(request):
+    warden=CustomUser.objects.get(id=request.user.id)
+    block=Warden.objects.get(admin_id=warden.id).block_name
+    if block.block_name=="GH1":
+        student_list=Student.objects.filter(year=1,gender='Female')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="GH2":
+        student_list=Student.objects.filter(year=2,gender='Female')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="GH3":
+        student_list=Student.objects.filter(year=3,gender='Female')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="GH4":
+        student_list=Student.objects.filter(year=4,gender='Female')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="BH1":
+        student_list=Student.objects.filter(year=1,gender='Male')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="BH2":
+        student_list=Student.objects.filter(year=2,gender='Male')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="BH3":
+        student_list=Student.objects.filter(year=3,gender='Male')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    elif block.block_name=="BH4":
+        student_list=Student.objects.filter(year=4,gender='Male')
+        return render(request,'studentList.html',{'student_list':student_list, 'block':block})

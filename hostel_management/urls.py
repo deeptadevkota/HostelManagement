@@ -27,6 +27,6 @@ urlpatterns = [
          name="complainFormSubmission"),
     path('signout', views.dosignout, name="dosignout"),
     path('wardenDashboard', views.wardenDashboard, name="wardenDashboard"),
-    path('viewComplain', views.viewComplain, name="viewComplain")
-
+    path('viewComplain', views.viewComplain, name="viewComplain"),
+     path('studentList', views.studentList, name="studentList")
 ]
