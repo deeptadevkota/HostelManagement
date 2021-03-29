@@ -1,6 +1,6 @@
 # HostelManagement
 
-Requirements :
+## Requirements :
 * Python 3.8.5
 * Django 2.2.12
 * MySQL Client Library
