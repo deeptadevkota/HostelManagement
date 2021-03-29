@@ -318,6 +318,12 @@ def room_register_2(request):
             quotient = int(latest_count / 50)
             room_no = 100*(quotient+1) + mod + 1
             room = GH2(room_no=room_no, roll_1=roll_1, roll_2=roll_2)
+
+            if WaitingTable.objects.filter(roll_no=roll_1).exists():
+                WaitingTable.objects.filter(roll_no=roll_1).delete()
+            if WaitingTable.objects.filter(roll_no=roll_2).exists():
+                WaitingTable.objects.filter(roll_no=roll_2).delete()
+                
             room.save()
         else:
             if BH2.objects.filter(roll_1=roll_1).exists() or BH2.objects.filter(roll_2=roll_1).exists():
@@ -332,6 +338,12 @@ def room_register_2(request):
             quotient = int(latest_count / 50)
             room_no = 100*(quotient+1) + mod + 1
             room = BH2(room_no=room_no, roll_1=roll_1, roll_2=roll_2)
+
+            if WaitingTable.objects.filter(roll_no=roll_1).exists():
+                WaitingTable.objects.filter(roll_no=roll_1).delete()
+            if WaitingTable.objects.filter(roll_no=roll_2).exists():
+                WaitingTable.objects.filter(roll_no=roll_2).delete()
+
             room.save()
 
         print('room saved')
