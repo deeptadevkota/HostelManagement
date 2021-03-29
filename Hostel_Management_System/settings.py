@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Hostel_Management_System.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR , 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,8 +80,8 @@ DATABASES = {
         # 'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hostel_management_system',
-        'USER':'root',
-        'PASSWORD':'akanksha.191CS106',
+        'USER':'hostel_management_system',
+        'PASSWORD':'password',
         'HOST':'localhost',
         'PORT':'3306'
     }
@@ -125,3 +125,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
+AUTH_USER_MODEL = 'hostel_management.CustomUser'
+AUTHENTICATION_BACKENDS=['hostel_management.EmailBackEnd.EmailBackEnd', 'django.contrib.auth.backends.ModelBackend']

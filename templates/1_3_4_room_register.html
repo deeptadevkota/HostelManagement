@@ -1,0 +1,75 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <section class="center-align">
+    Hostel Management Portal
+  </section>
+
+  <nav>
+    <div className="nav-wrapper">
+      <ul id="nav-mobile" className="left hide-on-med-and-down">
+          <li><a href="dashboard">Home</a></li>
+          <li><a href="room_register_1_3_4">Book your room</a></li>
+          <li><a href="knowYourWarden">Know your warden</a></li>
+          <li><a href="complainForm">Complaint</a></li>
+          <li><a href="signout">Sign Out</a></li>
+      </ul>
+  </div>
+  </nav>
+  <br />
+  <div class="container">
+    <div class="row">
+      <form class="col s12" method="POST" action="room_register_1_3_4">
+        {% csrf_token %}
+        <div class="row">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="name" type="text" name="name" class="validate" required>
+              <label for="name">Name</label>
+            </div>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="reg_no" type="text" name="roll_no" class="validate" required>
+            <label for="reg_no">Roll Number</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="year" type="number" name="year" class="validate" required>
+            <label for="year">Year</label>
+          </div>
+          
+          <div class="input-field col s6">
+            <input id="contact" type="number" name="contact" class="validate" required>
+            <label for="contact">Contact Number</label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="gender" type="text" name="gender" class="validate" required>
+            <label for="gender">Gender</label>
+          </div>
+        </div>
+
+        <input type="submit" class="waves-effect waves-light btn-large center darken-4"
+          style="background-color: #f9a825;">
+
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>

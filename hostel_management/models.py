@@ -1,91 +1,77 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# Create your models here.
-
+class CustomUser(AbstractUser):
+    user_type_data = ((2, "Warden"), (3, "Student"))
+    user_type = models.CharField(
+        default=1, choices=user_type_data, max_length=20)
 
 class Student(models.Model):
-    roll_no = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    year = models.IntegerField()
+    roll_no = models.CharField(max_length=200)
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    year = models.IntegerField(default=2019)
     branch = models.CharField(max_length=50)
     gender = models.CharField(max_length=50)
-    email = models.CharField(max_length=255)
     contact_number = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.roll_no
+
 
 class Building(models.Model):
     block_name = models.CharField(primary_key = True, max_length = 50 ,default=None)
     num_of_floors = models.IntegerField()
     rooms_per_floor = models.IntegerField()
 
+    def __str__(self):
+        return self.block_name
+
+class Warden(models.Model):
+    admin = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    department = models.CharField(max_length=200)
+    contact = models.CharField(max_length=20)
+    gender = models.CharField(max_length=200)
+    block_name = models.ForeignKey(Building,on_delete=models.CASCADE, default=None, null=True)
 
 class GH1(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_GH1')
-    roll_2 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_2_student_GH1')
-    roll_3 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_3_student_GH1')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_2 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_3 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class GH2(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_GH2')
-    roll_2 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_2_student_GH2')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_2 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class GH3(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_GH3')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class GH4(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_GH4')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class BH1(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_BH1')
-    roll_2 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_2_student_BH1')
-    roll_3 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_3_student_BH1')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_2 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_3 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class BH2(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_BH2')
-    roll_2 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_2_student_BH2')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
+    roll_2 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class BH3(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_BH3')
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class BH4(models.Model):
     room_no = models.IntegerField(primary_key = True)
-    roll_1 = models.ForeignKey(
-        Student, on_delete=models.CASCADE, blank=True, default=None, related_name='roll_1_student_BH4')
-
-
-
-class Warden(models.Model):
-    warden_id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=200)
-    password = models.CharField(max_length=200)
-    department = models.CharField(max_length=200)
-    email = models.EmailField(max_length=200)
-    contact = models.CharField(max_length=20)
-    gender = models.CharField(max_length=200)
-    block_name = models.ForeignKey(Building,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.name
-
+    roll_1 = models.CharField(null = True, blank=True, default=None, max_length = 10)
 
 class Complaint(models.Model):
     complaint_id = models.IntegerField(primary_key=True)
