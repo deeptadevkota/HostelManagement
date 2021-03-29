@@ -19,7 +19,6 @@ class Student(models.Model):
     def __str__(self):
         return self.roll_no
 
-
 class Building(models.Model):
     block_name = models.CharField(primary_key = True, max_length = 50 ,default=None)
     num_of_floors = models.IntegerField()
