@@ -9,19 +9,24 @@ from django.contrib import messages
 def home(request):
     return render(request, 'home.html', {})
 
+
 def register(request):
     return render(request, 'Register1.html', {})
+
 
 def registerWarden(request):
     blocks = Building.objects.all()
     print(blocks)
     return render(request, 'RegisterWarden.html', {"blocks":blocks})
 
+
 def signin(request):
     return render(request, 'signin.html', {})
 
+
 def signinwarden(request):
     return render(request, 'signinWarden.html', {})
+
 
 def dashboard(request):
     return render(request, 'studentDashboard.html', {})
@@ -29,21 +34,27 @@ def dashboard(request):
 def wardenDashboard(request):
     return render(request, 'wardenDashboard.html', {})
 
+
 def room_register134(request):
     return render(request, '1_3_4_room_register.html')
+
 
 def room_register2(request):
     return render(request, '2_room_register.html')
 
+
 def waiting_table_form(request):
     return render(request, 'waiting_form.html')
+
 
 def complainForm(request):
     return render(request, 'complainForm.html')
 
+
 def dosignout(request):
     logout(request)
     return render(request, 'home.html')
+
 
 def complainFormSubmission(request):
     if request.method != "POST":
