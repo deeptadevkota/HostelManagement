@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.signals import post_save
@@ -185,3 +186,5 @@ def save_user_profile(sender,instance,**kwargs):
         instance.student.save()
 
 >>>>>>> complain
+=======
+>>>>>>> ce34ff767b72866f9a60d8a6cdd9a9e70f3d885a
