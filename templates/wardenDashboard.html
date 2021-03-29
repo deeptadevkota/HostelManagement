@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+    </head>
+    <body>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+        
+        <section class="center-align">
+            Hostel Management Portal
+        </section>
+
+        <nav>
+            <div className="nav-wrapper">
+                <ul id="nav-mobile" className="left hide-on-med-and-down">
+                    <li><a href="wardenDashboard">Home</a></li>
+                    <li><a href="studentList">Students</a></li>
+                    <li><a href="viewComplain">Complains</a></li>
+                    <li><a href="signout">Sign Out</a></li>
+                </ul>
+            </div>
+        </nav>
+        <section id="main">
+            <section id="content">
+                <h1>Welcome, {{warden.first_name}} {{warden.last_name}}!</h1>
+                <p>Warden of block- {{block.block_name}}</p>
+                <br/>
+                <br/>
+                
+            </section>
+            <img id="slide" src='{% static "images/bg.jpg" %}'>
+        </section>
+
+    </body>
+</html>

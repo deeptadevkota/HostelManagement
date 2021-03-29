@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static '/css/dashboard.css' %}">
+</head>
+
+<body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+  <section class="center-align">
+    Hostel Management Portal
+  </section>
+
+  <nav>
+    <div className="nav-wrapper">
+      <ul id="nav-mobile" className="left hide-on-med-and-down">
+        <li><a href="home">Home</a></li>
+        <li><a href="signin">Sign In</a></li>
+        <li><a href="register">Register</a></li>
+        <li><a href="contactUs">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+  <br />
+  <div class="row" style="margin-left: 30%;">
+    <a class="waves-effect waves-light btn-large center darken-4" href="register"
+      style="background-color: #f9a825;">Student Registration</a>
+    <a class="waves-effect waves-light btn-large center darken-4" href="registerWarden"
+      style="background-color: #f9a825;">Warden Registration</a>
+  </div>
+  <div class="container">
+    <div class="row">
+      <form class="col s12" method='POST' action="register_form_submission">
+        {% csrf_token %}
+        <div class="row">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="first_name" type="text" name="first_name" class="validate" required>
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="last_name" type="text" name="last_name" class="validate" required>
+              <label for="last_name">Last Name</label>
+            </div>
+            <div class="input-field col s12">
+              <input id="username" type="text" name="username" class="validate" required>
+              <label for="username">Roll number</label>
+            </div>
+          </div>
+          <div class="input-field col s6">
+            <input id="branch" type="text" name="branch" class="validate" required>
+            <label for="branch">Branch</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="year" type="number" name="year" class="validate" required>
+            <label for="year">Year</label>
+          </div>
+          <div class="input-field col s6">
+            <input id="contact" type="number" name="contact" class="validate" required>
+            <label for="contact">Contact Number</label>
+          </div>
+
+          <div class="input-field col s6">
+            <input id="gender" type="text" name="gender" class="validate" required>
+            <label for="gender">Gender</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="password" name="password" type="text" class="validate" required>
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="email" type="email" name="email" class="validate" required>
+            <label for="email">Email</label>
+          </div>
+        </div>
+        <input type="submit" value="SUBMIT" class="waves-effect waves-light btn-large center darken-4"
+          style="background-color: #f9a825;">
+      </form>
+    </div>
+  </div>
+</body>
+</html>
