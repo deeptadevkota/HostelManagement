@@ -44,7 +44,7 @@ $create user 'hostel_management_system'@'localhost' identified by 'password';
 $grant all privileges on *.* to 'hostel_management_system';
 ```
 
-**6)Makemigrations to database**\
+**6)Makemigrations to database**
 ```
 $python manage.py makemigrations
 ```
@@ -52,12 +52,12 @@ $python manage.py makemigrations
 $python manage.py migrate
 ```
 
-**7)Create a superuser**\
+**7)Create a superuser**
 ```
 $python manage.py createsuperuser
 ```
 
-**8)Run Server**\
+**8)Run Server**
 ```
 $python manage.py runserver
 ```
