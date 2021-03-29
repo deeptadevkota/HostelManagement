@@ -38,7 +38,7 @@ $cd HostelManagement
 $create database hostel_management_system;
 ```
 ```
-$create user 'hostel_management_system'@localhost identified by 'password';
+$create user 'hostel_management_system'@'localhost' identified by 'password';
 ```
 ```
 $grant all privileges on *.* to 'hostel_management_system';
