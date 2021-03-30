@@ -20,11 +20,13 @@
     <div className="nav-wrapper">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
           <li><a href="dashboard">Home</a></li>
-          {% if student.year == 2  %}
-              <li><a href="room_register2">Book your room</a></li>
-              <li><a href="waiting_table_form"> Waiting Table Form</a></li>
-          {% else %}
-              <li><a href="room_register134">Book your room</a></li>
+          {%if not r_block.room%}
+              {% if student.year == 2  %}
+                  <li><a href="room_register2">Book your room</a></li>
+                  <li><a href="waiting_table_form"> Waiting Table Form</a></li>
+              {% else %}
+                  <li><a href="room_register134">Book your room</a></li>
+              {% endif %}
           {% endif %}
           <li><a href="knowYourWarden">Know your warden</a></li>
           <li><a href="complainForm">Complaint</a></li>
