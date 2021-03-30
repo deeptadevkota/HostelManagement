@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable, Complaint, Building
+from .models import Student, Warden, CustomUser, GH1, GH2, GH3, GH4, BH1, BH2, BH3, BH4, WaitingTable, Complaint, Building, room_Allocation
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import login, logout
 from hostel_management.EmailBackEnd import EmailBackEnd
@@ -204,7 +204,8 @@ def dosigninStudent(request):
                 year = student.year
                 gender = student.gender
                 r_block = check_room(roll_no,year,gender)
-                return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block})
+                r_Allocation=room_Allocation.objects.all()
+                return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block, "room_Allocation":r_Allocation})
             else:
                 messages.info(request,"Invalid Email or Password")
                 return render(request, 'signin.html', {})
@@ -603,4 +604,5 @@ def knowYourWarden(request):
             warden=Warden.objects.get(block_name=block)
             customUser=CustomUser.objects.get(id=warden.admin_id)
             return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
+
         

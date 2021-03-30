@@ -52,6 +52,9 @@
                     {% for message in messages%}
                         <h3>{{message}}</h3>
                     {% endfor %}
+                    {%for r in r_Allocation %}
+                        {{r.is_room_allocation_set}}
+                    {% endfor %}
                 {% endif %}
             </section>
             <img id="slide" src='{% static "images/bg.jpg" %}'>
