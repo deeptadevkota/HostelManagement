@@ -42,7 +42,9 @@
                         <h3>Your Block: {{r_block.block}}</h3>
                         <h3>Your Room No : {{r_block.room}}</h3>
                     {% else %}
-                        {% if student.year == 2  %}
+                        {% if is_set == 0 %}
+                            <h1>You cannot register</h1>
+                        {% elif student.year == 2  %}
                             <a class="waves-effect waves-light btn-large" href="room_register2"> Book Your Room Now!</a>
                             <a class="waves-effect waves-light btn-large" href="waiting_table_form"> Waiting Table Form!</a>
                         {% else %}
@@ -51,9 +53,6 @@
                     {% endif %}
                     {% for message in messages%}
                         <h3>{{message}}</h3>
-                    {% endfor %}
-                    {%for r in r_Allocation %}
-                        {{r.is_room_allocation_set}}
                     {% endfor %}
                 {% endif %}
             </section>

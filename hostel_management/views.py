@@ -204,8 +204,9 @@ def dosigninStudent(request):
                 year = student.year
                 gender = student.gender
                 r_block = check_room(roll_no,year,gender)
-                r_Allocation=room_Allocation.objects.all()
-                return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block, "room_Allocation":r_Allocation})
+                is_set=room_Allocation.objects.all()[0].is_room_allocation_set
+                print("**********************")
+                return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block, "is_set":is_set})
             else:
                 messages.info(request,"Invalid Email or Password")
                 return render(request, 'signin.html', {})
