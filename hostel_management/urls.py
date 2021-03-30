@@ -29,5 +29,7 @@ urlpatterns = [
     path('wardenDashboard', views.wardenDashboard, name="wardenDashboard"),
     path('viewComplain', views.viewComplain, name="viewComplain"),
      path('studentList', views.studentList, name="studentList"),
-     path('knowYourWarden',views.knowYourWarden, name="knowYourWarden")
+     path('knowYourWarden',views.knowYourWarden, name="knowYourWarden"),
+     path('roomAllocation', views.roomAllocation, name="roomAllocation"),
+     path('form_roomAllocation',views.form_roomAllocation,name="form_roomAllocation")
 ]

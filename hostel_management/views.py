@@ -158,6 +158,7 @@ def registerWarden_form_submission(request):
 
             user = CustomUser.objects.create_user(
                 username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
+            print("**********")
             user.warden.gender = gender
             user.warden.department = department
             user.warden.contact = contact_number
@@ -204,7 +205,8 @@ def dosigninStudent(request):
                 year = student.year
                 gender = student.gender
                 r_block = check_room(roll_no,year,gender)
-                is_set=room_Allocation.objects.all()[0].is_room_allocation_set
+                count=room_Allocation.objects.count()
+                is_set=room_Allocation.objects.all()[count-1].is_room_allocation_set
                 return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block, "is_set":is_set})
             else:
                 messages.info(request,"Invalid Email or Password")
@@ -605,4 +607,19 @@ def knowYourWarden(request):
             customUser=CustomUser.objects.get(id=warden.admin_id)
             return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
 
-        
+def roomAllocation(request):
+    return render(request,'roomAllocation.html')
+
+def form_roomAllocation(request):
+    if request.method != "POST":
+        return HttpResponse("<h2>Method Not Allowed</h2>")
+    else:
+        choice= request.POST.get('choice')
+        if(choice=="Yes"):
+            val=1
+        else:
+            val=0
+        r = room_Allocation(is_room_allocation_set=val)
+        r.save()
+    return render(request,'wardenDashboard.html')
+
