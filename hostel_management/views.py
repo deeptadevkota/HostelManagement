@@ -49,7 +49,7 @@ def room_register134(request):
     year = student.year
     gender = student.gender
     r_block = check_room(roll_no, year, gender)
-    return render(request, '1_3_4_room_register.html', {"student": student, 'r_block': block})
+    return render(request, '1_3_4_room_register.html', {"student": student, 'r_block': r_block})
 
 
 def room_register2(request):
