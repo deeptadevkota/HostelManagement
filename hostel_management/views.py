@@ -408,7 +408,7 @@ def room_register_1_3_4(request):
                 mod = latest_count % 75
                 quotient = int(latest_count / 75)
                 room_no = 100*(quotient+1) + mod + 1
-                if student.year == 3:
+                if year == 3:
                     room = BH3(room_no=room_no, roll_1=roll_no)
                 else:
                     room = BH4(room_no=room_no, roll_1=roll_no)
