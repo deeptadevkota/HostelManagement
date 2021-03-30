@@ -116,7 +116,7 @@ class WaitingTable(models.Model):
 
 
 class room_Allocation(models.Model):
-    is_room_allocation_set = models.IntegerField(primary_key=True, default=1)
+    is_room_allocation_set = models.IntegerField(default=1)
 
 
 @receiver(post_save, sender=CustomUser)

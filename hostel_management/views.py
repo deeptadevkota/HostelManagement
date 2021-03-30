@@ -9,19 +9,24 @@ from django.contrib import messages
 def home(request):
     return render(request, 'home.html', {})
 
+
 def register(request):
     return render(request, 'Register1.html', {})
+
 
 def registerWarden(request):
     blocks = Building.objects.all()
     print(blocks)
-    return render(request, 'RegisterWarden.html', {"blocks":blocks})
+    return render(request, 'RegisterWarden.html', {"blocks": blocks})
+
 
 def signin(request):
     return render(request, 'signin.html', {})
 
+
 def signinwarden(request):
     return render(request, 'signinWarden.html', {})
+
 
 def dashboard(request):
     admin_id = request.user.id
@@ -29,11 +34,13 @@ def dashboard(request):
     roll_no = student.roll_no
     year = student.year
     gender = student.gender
-    r_block = check_room(roll_no,year,gender)
-    return render(request, 'studentDashboard.html', {"student":student, "r_block" : r_block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, 'studentDashboard.html', {"student": student, "r_block": r_block})
+
 
 def wardenDashboard(request):
     return render(request, 'wardenDashboard.html', {})
+
 
 def room_register134(request):
     admin_id = request.user.id
@@ -41,8 +48,9 @@ def room_register134(request):
     roll_no = student.roll_no
     year = student.year
     gender = student.gender
-    r_block = check_room(roll_no,year,gender)
-    return render(request, '1_3_4_room_register.html',{"student":student, 'r_block':block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, '1_3_4_room_register.html', {"student": student, 'r_block': block})
+
 
 def room_register2(request):
     admin_id = request.user.id
@@ -50,8 +58,9 @@ def room_register2(request):
     roll_no = student.roll_no
     year = student.year
     gender = student.gender
-    r_block = check_room(roll_no,year,gender)
-    return render(request, '2_room_register.html',{"student":student, "r_block" : r_block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, '2_room_register.html', {"student": student, "r_block": r_block})
+
 
 def waiting_table_form(request):
     admin_id = request.user.id
@@ -59,8 +68,9 @@ def waiting_table_form(request):
     roll_no = student.roll_no
     year = student.year
     gender = student.gender
-    r_block = check_room(roll_no,year,gender)
-    return render(request, 'waiting_form.html',{"student":student, "r_block" : r_block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, 'waiting_form.html', {"student": student, "r_block": r_block})
+
 
 def complainForm(request):
     admin_id = request.user.id
@@ -68,12 +78,14 @@ def complainForm(request):
     roll_no = student.roll_no
     year = student.year
     gender = student.gender
-    r_block = check_room(roll_no,year,gender)
-    return render(request, 'complainForm.html',{"student":student, "r_block" : r_block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, 'complainForm.html', {"student": student, "r_block": r_block})
+
 
 def dosignout(request):
     logout(request)
     return render(request, 'home.html')
+
 
 def complainFormSubmission(request):
     if request.method != "POST":
@@ -106,17 +118,17 @@ def register_form_submission(request):
 
             if CustomUser.objects.filter(email=email).exists():
                 print('user already exists')
-                messages.info(request,"Email already exists")
+                messages.info(request, "Email already exists")
                 return render(request, 'Register1.html', {})
 
             if CustomUser.objects.filter(username=username).exists():
                 print('username already taken')
-                messages.info(request,"Username already exists")
+                messages.info(request, "Username already exists")
                 return render(request, 'Register1.html', {})
 
             if Student.objects.filter(roll_no=roll_no).exists():
                 print('Student already registered')
-                messages.info(request,"Roll no. already registered")
+                messages.info(request, "Roll no. already registered")
                 return render(request, 'Register.html', {})
 
             user = CustomUser.objects.create_user(
@@ -148,12 +160,12 @@ def registerWarden_form_submission(request):
 
             if CustomUser.objects.filter(email=email).exists():
                 print('user already exists')
-                messages.info(request,"Email already exists")
+                messages.info(request, "Email already exists")
                 return render(request, 'RegisterWarden.html', {})
 
             if CustomUser.objects.filter(username=username).exists():
                 print('username already taken')
-                messages.info(request,"Username already exists")
+                messages.info(request, "Username already exists")
                 return render(request, 'RegisterWarden.html', {})
 
             user = CustomUser.objects.create_user(
@@ -162,9 +174,9 @@ def registerWarden_form_submission(request):
             user.warden.gender = gender
             user.warden.department = department
             user.warden.contact = contact_number
-            block=Building.objects.get(block_name=block_name)
+            block = Building.objects.get(block_name=block_name)
             print(block)
-            user.warden.block_name=block
+            user.warden.block_name = block
             user.save()
             print('saved')
             return render(request, 'signin.html', {})
@@ -179,14 +191,14 @@ def dosigninWarden(request):
         if user != None:
             login(request, user, backend='hostel_management.EmailBackEnd.EmailBackEnd')
             warden = CustomUser.objects.get(id=request.user.id)
-            block=Warden.objects.get(admin_id=warden.id).block_name
+            block = Warden.objects.get(admin_id=warden.id).block_name
             if user.user_type == "2":
-                return render(request, 'wardenDashboard.html', context={'warden':warden, 'block':block})
+                return render(request, 'wardenDashboard.html', context={'warden': warden, 'block': block})
             else:
-                messages.info(request,"Invalid Email or Password")
+                messages.info(request, "Invalid Email or Password")
                 return render(request, 'signin.html', {})
         else:
-            messages.info(request,"Invalid Email or Password")
+            messages.info(request, "Invalid Email or Password")
             return render(request, 'signin.html', {})
 
 
@@ -204,77 +216,79 @@ def dosigninStudent(request):
                 roll_no = student.roll_no
                 year = student.year
                 gender = student.gender
-                r_block = check_room(roll_no,year,gender)
-                count=room_Allocation.objects.count()
-                is_set=room_Allocation.objects.all()[count-1].is_room_allocation_set
-                return render(request, 'studentDashboard.html', {"student": student, "user":user, "r_block" : r_block, "is_set":is_set})
+                r_block = check_room(roll_no, year, gender)
+                count = room_Allocation.objects.count()
+                is_set = room_Allocation.objects.all(
+                )[count-1].is_room_allocation_set
+                return render(request, 'studentDashboard.html', {"student": student, "user": user, "r_block": r_block, "is_set": is_set})
             else:
-                messages.info(request,"Invalid Email or Password")
+                messages.info(request, "Invalid Email or Password")
                 return render(request, 'signin.html', {})
         else:
-            messages.info(request,"Invalid Email or Password")
+            messages.info(request, "Invalid Email or Password")
             return render(request, 'signin.html', {})
+
 
 def check_room(roll_no, year, gender):
     room = 0
     block = None
     if int(year) == 1:
         if gender == "Female":
-            if GH1.objects.filter(roll_1 = roll_no).exists():
-                room = GH1.objects.get(roll_1 = roll_no).room_no
+            if GH1.objects.filter(roll_1=roll_no).exists():
+                room = GH1.objects.get(roll_1=roll_no).room_no
                 block = "GH1"
-            elif GH1.objects.filter(roll_2 = roll_no).exists():
-                room = GH1.objects.get(roll_2 = roll_no).room_no
+            elif GH1.objects.filter(roll_2=roll_no).exists():
+                room = GH1.objects.get(roll_2=roll_no).room_no
                 block = "GH1"
-            elif GH1.objects.filter(roll_3 = roll_no).exists():
-                room = GH1.objects.get(roll_3 = roll_no).room_no
+            elif GH1.objects.filter(roll_3=roll_no).exists():
+                room = GH1.objects.get(roll_3=roll_no).room_no
                 block = "GH1"
         else:
-            if BH1.objects.filter(roll_1 = roll_no).exists():
-                room = BH1.objects.get(roll_1 = roll_no).room_no
+            if BH1.objects.filter(roll_1=roll_no).exists():
+                room = BH1.objects.get(roll_1=roll_no).room_no
                 block = "BH1"
-            if BH1.objects.filter(roll_2 = roll_no).exists():
-                room = BH1.objects.get(roll_2 = roll_no).room_no
+            if BH1.objects.filter(roll_2=roll_no).exists():
+                room = BH1.objects.get(roll_2=roll_no).room_no
                 block = "BH1"
-            if BH1.objects.filter(roll_3 = roll_no).exists():
-                room = BH1.objects.get(roll_3 = roll_no).room_no
+            if BH1.objects.filter(roll_3=roll_no).exists():
+                room = BH1.objects.get(roll_3=roll_no).room_no
                 block = "BH1"
     elif int(year) == 2:
         if gender == "Female":
-            if GH2.objects.filter(roll_1 = roll_no).exists():
-                room = GH2.objects.get(roll_1 = roll_no).room_no
+            if GH2.objects.filter(roll_1=roll_no).exists():
+                room = GH2.objects.get(roll_1=roll_no).room_no
                 block = "GH2"
-            elif GH2.objects.filter(roll_2 = roll_no).exists():
-                room = GH2.objects.get(roll_2 = roll_no).room_no
+            elif GH2.objects.filter(roll_2=roll_no).exists():
+                room = GH2.objects.get(roll_2=roll_no).room_no
                 block = "GH2"
         else:
-            if BH2.objects.filter(roll_1 = roll_no).exists():
-                room = BH2.objects.get(roll_1 = roll_no).room_no
+            if BH2.objects.filter(roll_1=roll_no).exists():
+                room = BH2.objects.get(roll_1=roll_no).room_no
                 block = "BH2"
-            elif BH2.objects.filter(roll_2 = roll_no).exists():
-                room = BH2.objects.get(roll_2 = roll_no).room_no
+            elif BH2.objects.filter(roll_2=roll_no).exists():
+                room = BH2.objects.get(roll_2=roll_no).room_no
                 block = "BH2"
     elif int(year) == 3:
         if gender == "Female":
-            if GH3.objects.filter(roll_1 = roll_no).exists():
-                room = GH3.objects.get(roll_1 = roll_no).room_no
+            if GH3.objects.filter(roll_1=roll_no).exists():
+                room = GH3.objects.get(roll_1=roll_no).room_no
                 block = "GH3"
         else:
-            if BH3.objects.filter(roll_1 = roll_no).exists():
-                room = BH3.objects.get(roll_1 = roll_no).room_no
+            if BH3.objects.filter(roll_1=roll_no).exists():
+                room = BH3.objects.get(roll_1=roll_no).room_no
                 block = "BH3"
     elif int(year) == 4:
         if gender == "Female":
-            if GH4.objects.filter(roll_1 = roll_no).exists():
-                room = GH4.objects.get(roll_1 = roll_no).room_no
+            if GH4.objects.filter(roll_1=roll_no).exists():
+                room = GH4.objects.get(roll_1=roll_no).room_no
                 block = "GH4"
         else:
-            if BH4.objects.filter(roll_1 = roll_no).exists():
-                room = BH4.objects.get(roll_1 = roll_no).room_no
+            if BH4.objects.filter(roll_1=roll_no).exists():
+                room = BH4.objects.get(roll_1=roll_no).room_no
                 block = "BH4"
-    r_block = {"room" : room , "block" : block}
+    r_block = {"room": room, "block": block}
     return r_block
-    
+
 
 def room_register_1_3_4(request):
     if request.method != "POST":
@@ -298,8 +312,8 @@ def room_register_1_3_4(request):
 
                 if GH1.objects.filter(roll_1=roll_no).exists() or GH1.objects.filter(roll_2=roll_no).exists() or GH1.objects.filter(roll_3=roll_no).exists():
                     print('Room already allocated')
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
 
                 latest_room = GH1.objects.order_by('room_no').last()
                 print(latest_room)
@@ -323,8 +337,8 @@ def room_register_1_3_4(request):
             else:
                 if BH1.objects.filter(roll_1=roll_no).exists() or BH1.objects.filter(roll_2=roll_no).exists() or BH1.objects.filter(roll_3=roll_no).exists():
                     print('Room already allocated')
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
 
                 latest_room = BH1.objects.order_by('room_no').last()
                 print(latest_room)
@@ -350,21 +364,21 @@ def room_register_1_3_4(request):
             if gender == "Female":
                 if int(year) == 3 and GH3.objects.filter(roll_1=roll_no).exists():
                     print("Room already allocated")
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
                 elif int(year) == 4 and GH4.objects.filter(roll_1=roll_no).exists():
                     print("Room already allocated")
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
             else:
                 if int(year) == 3 and BH3.objects.filter(roll_1=roll_no).exists():
                     print("Room already allocated")
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
                 elif int(year) == 4 and BH4.objects.filter(roll_1=roll_no).exists():
                     print("Room already allocated")
-                    r_block = check_room(roll_no,year,gender)
-                    return render(request, 'studentDashboard.html', {"r_block":r_block})
+                    r_block = check_room(roll_no, year, gender)
+                    return render(request, 'studentDashboard.html', {"r_block": r_block})
 
             if gender == "Female":
                 if int(year) == 3:
@@ -394,8 +408,8 @@ def room_register_1_3_4(request):
                 room.save()
 
         print('room saved')
-        r_block = check_room(roll_no,year,gender)
-        return render(request, 'studentDashboard.html', {"r_block":r_block})
+        r_block = check_room(roll_no, year, gender)
+        return render(request, 'studentDashboard.html', {"r_block": r_block})
 
 
 def room_register_2(request):
@@ -412,21 +426,21 @@ def room_register_2(request):
         # admin1 = Student.objects.get(roll_no = roll_1).admin_id
         # admin2 = Student.objects.get(roll_no = roll_2).admin_id
         admin_id = request.user.id
-        sign_student = Student.objects.get(admin_id = admin_id)
+        sign_student = Student.objects.get(admin_id=admin_id)
         roll_no = sign_student.roll_no
         gender = sign_student.gender
 
         if gender == "Female":
             if GH2.objects.filter(roll_1=roll_1).exists() or GH2.objects.filter(roll_2=roll_1).exists():
                 print("Roll no 1 already allocated room")
-                messages.info(request,"Student 1 already allocated room")
-                r_block = check_room(roll_no,year,gender)
-                return render(request, 'studentDashboard.html', {"r_block":r_block})
+                messages.info(request, "Student 1 already allocated room")
+                r_block = check_room(roll_no, year, gender)
+                return render(request, 'studentDashboard.html', {"r_block": r_block})
             if GH2.objects.filter(roll_1=roll_2).exists() or GH2.objects.filter(roll_2=roll_2).exists():
                 print("Roll no 2 already allocated room")
-                messages.info(request,"Student 2 already allocated room")
-                r_block = check_room(roll_no,year,gender)
-                return render(request, 'studentDashboard.html', {"r_block":r_block})
+                messages.info(request, "Student 2 already allocated room")
+                r_block = check_room(roll_no, year, gender)
+                return render(request, 'studentDashboard.html', {"r_block": r_block})
 
             latest_count = GH2.objects.count()
             mod = latest_count % 50
@@ -438,19 +452,19 @@ def room_register_2(request):
                 WaitingTable.objects.filter(roll_no=roll_1).delete()
             if WaitingTable.objects.filter(roll_no=roll_2).exists():
                 WaitingTable.objects.filter(roll_no=roll_2).delete()
-        
+
             room.save()
         else:
             if BH2.objects.filter(roll_1=roll_1).exists() or BH2.objects.filter(roll_2=roll_1).exists():
                 print("Roll no 1 already allocated room")
-                messages.info(request,"Student 1 already allocated room")
-                r_block = check_room(roll_no,year,gender)
-                return render(request, 'studentDashboard.html', {"r_block":r_block})
+                messages.info(request, "Student 1 already allocated room")
+                r_block = check_room(roll_no, year, gender)
+                return render(request, 'studentDashboard.html', {"r_block": r_block})
             if BH2.objects.filter(roll_1=roll_2).exists() or BH2.objects.filter(roll_2=roll_2).exists():
                 print("Roll no 2 already allocated room")
-                messages.info(request,"Student 2 already allocated room")
-                r_block = check_room(roll_no,year,gender)
-                return render(request, 'studentDashboard.html', {"r_block":r_block})
+                messages.info(request, "Student 2 already allocated room")
+                r_block = check_room(roll_no, year, gender)
+                return render(request, 'studentDashboard.html', {"r_block": r_block})
 
             latest_count = BH2.objects.count()
             mod = latest_count % 50
@@ -466,8 +480,8 @@ def room_register_2(request):
             room.save()
 
         print('room saved')
-        r_block = check_room(roll_no,year,gender)
-        return render(request, 'studentDashboard.html', {"r_block":r_block})
+        r_block = check_room(roll_no, year, gender)
+        return render(request, 'studentDashboard.html', {"r_block": r_block})
 
 
 def waiting_table(request):
@@ -477,21 +491,21 @@ def waiting_table(request):
     if gender == "Female":
         if GH2.objects.filter(roll_1=roll_1).exists() or GH2.objects.filter(roll_2=roll_1).exists():
             print("Roll no 1 already allocated room")
-            messages.info(request,"Room already allocated")
-            r_block = check_room(roll_no,year,gender)
-            return render(request, 'studentDashboard.html', {"r_block":r_block})
+            messages.info(request, "Room already allocated")
+            r_block = check_room(roll_no, year, gender)
+            return render(request, 'studentDashboard.html', {"r_block": r_block})
     else:
         if BH2.objects.filter(roll_1=roll_1).exists() or BH2.objects.filter(roll_2=roll_1).exists():
             print("Roll no 1 already allocated room")
-            messages.info(request,"Room already allocated")
-            r_block = check_room(roll_no,year,gender)
-            return render(request, 'studentDashboard.html', {"r_block":r_block})
+            messages.info(request, "Room already allocated")
+            r_block = check_room(roll_no, year, gender)
+            return render(request, 'studentDashboard.html', {"r_block": r_block})
 
     if WaitingTable.objects.filter(roll_no=roll_1).exists():
         print('Roll no already in waiting table')
-        messages.info(request,"Already in waiting table")
-        r_block = check_room(roll_no,year,gender)
-        return render(request, 'studentDashboard.html', {"r_block":r_block})
+        messages.info(request, "Already in waiting table")
+        r_block = check_room(roll_no, year, gender)
+        return render(request, 'studentDashboard.html', {"r_block": r_block})
 
     count = WaitingTable.objects.filter(gender=gender).count()
     if count == 0:
@@ -516,110 +530,118 @@ def waiting_table(request):
         room = BH2(room_no=room_no, roll_1=roll_1, roll_2=roll_2)
         room.save()
 
-    r_block = check_room(roll_no,year,gender)
-    return render(request, 'studentDashboard.html', {"r_block":r_block})
+    r_block = check_room(roll_no, year, gender)
+    return render(request, 'studentDashboard.html', {"r_block": r_block})
+
 
 def contactUs(request):
     objs = CustomUser.objects.filter(user_type="2")
     objs1 = Warden.objects.all()
     return render(request, 'contactUs.html', {'objs': objs, 'objs1': objs1})
 
+
 def viewComplain(request):
     complain = Complaint.objects.all()
-    return render(request, 'viewComplain.html', {'complain': complain, 'user':CustomUser})
+    return render(request, 'viewComplain.html', {'complain': complain, 'user': CustomUser})
+
 
 def studentList(request):
-    warden=CustomUser.objects.get(id=request.user.id)
-    block=Warden.objects.get(admin_id=warden.id).block_name
-    if block.block_name=="GH1":
-        student_list=Student.objects.filter(year=1,gender='Female')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="GH2":
-        student_list=Student.objects.filter(year=2,gender='Female')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="GH3":
-        student_list=Student.objects.filter(year=3,gender='Female')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="GH4":
-        student_list=Student.objects.filter(year=4,gender='Female')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="BH1":
-        student_list=Student.objects.filter(year=1,gender='Male')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="BH2":
-        student_list=Student.objects.filter(year=2,gender='Male')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="BH3":
-        student_list=Student.objects.filter(year=3,gender='Male')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
-    elif block.block_name=="BH4":
-        student_list=Student.objects.filter(year=4,gender='Male')
-        return render(request,'studentList.html',{'student_list':student_list, 'block':block})
+    warden = CustomUser.objects.get(id=request.user.id)
+    block = Warden.objects.get(admin_id=warden.id).block_name
+    if block.block_name == "GH1":
+        student_list = Student.objects.filter(year=1, gender='Female')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "GH2":
+        student_list = Student.objects.filter(year=2, gender='Female')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "GH3":
+        student_list = Student.objects.filter(year=3, gender='Female')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "GH4":
+        student_list = Student.objects.filter(year=4, gender='Female')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "BH1":
+        student_list = Student.objects.filter(year=1, gender='Male')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "BH2":
+        student_list = Student.objects.filter(year=2, gender='Male')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "BH3":
+        student_list = Student.objects.filter(year=3, gender='Male')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+    elif block.block_name == "BH4":
+        student_list = Student.objects.filter(year=4, gender='Male')
+        return render(request, 'studentList.html', {'student_list': student_list, 'block': block})
+
 
 def knowYourWarden(request):
-    user=CustomUser.objects.get(id=request.user.id)
-    student=Student.objects.get(admin_id=user.id)
-    year=student.year
-    gender=student.gender
+    user = CustomUser.objects.get(id=request.user.id)
+    student = Student.objects.get(admin_id=user.id)
+    year = student.year
+    gender = student.gender
     admin_id = request.user.id
     roll_no = student.roll_no
-    r_block = check_room(roll_no,year,gender)
-    if gender=='Male':
-        if year==1:
-            block='BH1'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==2:
-            block='BH2'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==3:
-            block='BH3'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==4:
-            block='BH4'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-    elif gender=='Female':
-        if year==1:
-            block='GH1'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==2:
-            block='GH2'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==3:
-            block='GH3'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
-        elif year==4:
-            block='GH4'
-            warden=Warden.objects.get(block_name=block)
-            customUser=CustomUser.objects.get(id=warden.admin_id)
-            return render(request, 'knowYourWarden.html',{'warden':warden, 'customUser':customUser, "r_block":r_block})
+    r_block = check_room(roll_no, year, gender)
+    if gender == 'Male':
+        if year == 1:
+            block = 'BH1'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 2:
+            block = 'BH2'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 3:
+            block = 'BH3'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 4:
+            block = 'BH4'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+    elif gender == 'Female':
+        if year == 1:
+            block = 'GH1'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 2:
+            block = 'GH2'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 3:
+            block = 'GH3'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+        elif year == 4:
+            block = 'GH4'
+            warden = Warden.objects.get(block_name=block)
+            customUser = CustomUser.objects.get(id=warden.admin_id)
+            return render(request, 'knowYourWarden.html', {'warden': warden, 'customUser': customUser, "r_block": r_block})
+
 
 def roomAllocation(request):
-    return render(request,'roomAllocation.html')
+    return render(request, 'roomAllocation.html')
+
 
 def form_roomAllocation(request):
     if request.method != "POST":
         return HttpResponse("<h2>Method Not Allowed</h2>")
     else:
-        choice= request.POST.get('choice')
-        if(choice=="Yes"):
-            val=1
+        choice = request.POST.get('choice')
+        if(choice.lower() == "yes"):
+            val = 1
         else:
-            val=0
+            val = 0
         r = room_Allocation(is_room_allocation_set=val)
         r.save()
-    return render(request,'wardenDashboard.html')
+        warden = CustomUser.objects.get(id=request.user.id)
+        block=Warden.objects.get(admin_id=warden.id).block_name
+        return render(request, 'wardenDashboard.html', context={'warden':warden, 'block':block})
 
