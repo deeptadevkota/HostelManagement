@@ -173,6 +173,10 @@ def registerWarden_form_submission(request):
                 print('username already taken')
                 messages.info(request, "Username already exists")
                 return render(request, 'RegisterWarden.html', {})
+            
+            if Warden.objects.filter(block_name=block_name):
+                messages.info(request, "Warden for this block exists")
+                return render(request, 'RegisterWarden.html', {})
 
             user = CustomUser.objects.create_user(
                 username=username, password=password, email=email, last_name=last_name, first_name=first_name, user_type=2)
